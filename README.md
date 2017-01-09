@@ -1,6 +1,7 @@
 # PHP Platform Configuration
 This package provides uniform APIs for configuring package specific settings in PHP Platform
 
+[![Build Status](https://travis-ci.org/PHPPlatform/config.svg?branch=v0.1)](https://travis-ci.org/PHPPlatform/config)
 
 ## Usage
  - add a file named _config.json_ in the root of the package

@@ -10,6 +10,7 @@ php:
 
 before_script:
   - composer update
+  - mkdir -p vendor/php-platform/testconfig123456
 
 script:
   - ./vendor/bin/phpunit -c phpunit.xml 
