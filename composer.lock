@@ -4,8 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4f1dc216b4a17e7a1c62e16d11ca4a2",
-    "packages": [],
+    "content-hash": "e88dd56c09aeb3f54a4e7f41a5a3106b",
+    "packages": [
+        {
+            "name": "php-platform/json-cache",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPPlatform/json-cache.git",
+                "reference": "896cd70c02c2267b353180944bbe6d3d7085385d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPPlatform/json-cache/zipball/896cd70c02c2267b353180944bbe6d3d7085385d",
+                "reference": "896cd70c02c2267b353180944bbe6d3d7085385d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpPlatform\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Raghavendra K R",
+                    "email": "krraghavendra@yahoo.co.in",
+                    "homepage": "http://krraghavendra.in",
+                    "role": "Software Developer"
+                }
+            ],
+            "homepage": "https://github.com/PHPPlatform/json-cache",
+            "keywords": [
+                "cache",
+                "caching",
+                "json",
+                "metadata",
+                "php-platform"
+            ],
+            "time": "2017-01-11T12:35:59+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",

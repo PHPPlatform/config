@@ -33,7 +33,7 @@ class TestSettings extends \PHPUnit_Framework_TestCase{
     	$vendorDir = dirname(dirname($classLoaderReflection->getFileName()));
     	$thisPackageConfigFile = dirname($vendorDir).'/config.json';
     	
-    	SettingsCache::reset();
+    	SettingsCache::getInstance()->reset();
     	
     	$setting = array("test"=>array("my"=>array("settings"=>array(1,array("here"=>"as a array"),3))));
     	file_put_contents($thisPackageConfigFile, json_encode($setting));
@@ -73,8 +73,8 @@ class TestSettings extends \PHPUnit_Framework_TestCase{
     		mkdir(dirname($packageConfigFile),"0777",true);
     	}
     	
-    	SettingsCache::reset();
-    	 
+    	SettingsCache::getInstance()->reset();
+    	
     	$setting = array("test"=>array("my"=>array("settings"=>array(1,array("here"=>"as a array"),3))));
     	file_put_contents($packageConfigFile, json_encode($setting));
     	 
@@ -98,7 +98,6 @@ class TestSettings extends \PHPUnit_Framework_TestCase{
     	// clear data
     	unlink($packageConfigFile);
     	rmdir(dirname($packageConfigFile));
-    	rmdir(dirname(dirname($packageConfigFile)));
     }
     
     

@@ -23,8 +23,7 @@ class Settings{
     public static function getSettings($package,$setting = null){
 
     	$package_ = preg_replace('/\/|\\\\/', ".", $package);
-    	$packagePaths = self::getPaths($package_);
-        $settings = SettingsCache::getInstance()->getData($packagePaths);
+    	$settings = SettingsCache::getInstance()->getData($package_);
         if($settings === NULL){
             $classLoaderReflection = new \ReflectionClass(new ClassLoader());
             $vendorDir = dirname(dirname($classLoaderReflection->getFileName()));
@@ -54,36 +53,19 @@ class Settings{
             $settings = json_decode(file_get_contents($packageConfigFile),true);
             
             $absoluteSettings = $settings;
-            foreach (array_reverse($packagePaths) as $packagePath){
+            foreach (array_reverse(preg_split('/\/|\\\/', $package)) as $packagePath){
             	$absoluteSettings = array($packagePath=>$absoluteSettings);
             }
             SettingsCache::getInstance()->setData($absoluteSettings);
         }
 
         if(is_string($setting)){
-            $settingPaths = self::getPaths($package_.".".$setting);
-            $settings = SettingsCache::getInstance()->getData($settingPaths);
+            $settings = SettingsCache::getInstance()->getData($package_.".".$setting);
         }
 
         return $settings;
 
     }
     
-    /**
-     * this method get the path array from string key
-     * @param string $key
-     */
-    private static function getPaths($key){
-    	$paths = array();
-    	$sourcePaths = explode(".", $key);
-    	foreach ($sourcePaths as $sourcePath){
-    		$subPaths = preg_split('/\[(.*?)\]/',$sourcePath,-1,PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
-    		if($subPaths !== FALSE){
-    			$paths = array_merge($paths,$subPaths);
-    		}
-    	}
-    	return $paths;
-    }
-
 }
 
