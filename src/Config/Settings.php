@@ -7,9 +7,22 @@
 
 namespace PhpPlatform\Config;
 
-use Composer\Autoload\ClassLoader;
 
 class Settings{
+	
+	private static function getVendorDir(){
+		$configPackageHome = dirname(dirname(__DIR__));
+		if(is_dir($configPackageHome.'/vendor')){
+			$vendorDir = $configPackageHome.'/vendor';
+		}else if(is_dir($configPackageHome.'/../../../vendor')){
+			$vendorDir = $configPackageHome.'/../../../vendor';
+		}else{
+			throw new \Exception('Unable to find vendor directory');
+		}
+		return $vendorDir;
+	}
+	
+	
 
     /**
      * this method retrieves settings of a package
@@ -25,9 +38,9 @@ class Settings{
     	$package_ = preg_replace('/\/|\\\\/', ".", $package);
     	$settings = SettingsCache::getInstance()->getData($package_);
         if($settings === NULL){
-            $classLoaderReflection = new \ReflectionClass(new ClassLoader());
-            $vendorDir = dirname(dirname($classLoaderReflection->getFileName()));
 
+        	$vendorDir = self::getVendorDir();
+        	
             $packageConfigFile = $vendorDir.'/'.$package.'/config.json';
 
             if(!file_exists($packageConfigFile)){

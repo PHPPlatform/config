@@ -5,7 +5,7 @@
  * Time: AM 11:57
  */
 
-namespace PHPPlatform\tests\Config;
+namespace PhpPlatform\Tests\Config;
 
 use PhpPlatform\Config\Settings;
 use Composer\Autoload\ClassLoader;
@@ -29,8 +29,8 @@ class TestSettings extends \PHPUnit_Framework_TestCase{
     
     public function testGetSettings1(){
     	// prepare data
-    	$classLoaderReflection = new \ReflectionClass(new ClassLoader());
-    	$vendorDir = dirname(dirname($classLoaderReflection->getFileName()));
+    	
+    	$vendorDir = $this->getVendorDir();
     	$thisPackageConfigFile = dirname($vendorDir).'/config.json';
     	
     	SettingsCache::getInstance()->reset();
@@ -62,8 +62,7 @@ class TestSettings extends \PHPUnit_Framework_TestCase{
     
     public function testGetSettings2(){
     	// prepare data
-    	$classLoaderReflection = new \ReflectionClass(new ClassLoader());
-    	$vendorDir = dirname(dirname($classLoaderReflection->getFileName()));
+    	$vendorDir = $vendorDir = $this->getVendorDir();
     	
     	$packageName = "php-platform/testconfig123456";
     	
@@ -98,6 +97,18 @@ class TestSettings extends \PHPUnit_Framework_TestCase{
     	// clear data
     	unlink($packageConfigFile);
     	rmdir(dirname($packageConfigFile));
+    }
+    
+    private function getVendorDir(){
+    	$configPackageHome = dirname(dirname(__DIR__));
+    	if(is_dir($configPackageHome.'/vendor')){
+    		$vendorDir = $configPackageHome.'/vendor';
+    	}else if(is_dir($configPackageHome.'/../../../vendor')){
+    		$vendorDir = $configPackageHome.'/../../../vendor';
+    	}else{
+    		throw new \Exception('Unable to find vendor directory');
+    	}
+    	return $vendorDir;
     }
     
     
