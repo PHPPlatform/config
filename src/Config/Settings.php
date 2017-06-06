@@ -22,7 +22,6 @@ class Settings{
 		return $vendorDir;
 	}
 	
-	
 
     /**
      * this method retrieves settings of a package
@@ -39,29 +38,7 @@ class Settings{
     	$settings = SettingsCache::getInstance()->getData($package_);
         if($settings === NULL){
 
-        	$vendorDir = self::getVendorDir();
-        	
-            $packageConfigFile = $vendorDir.'/'.$package.'/config.json';
-
-            if(!file_exists($packageConfigFile)){
-            	// if no config.json in vendor directory , 
-            	// try to find the current package's config.json
-            	$thisPackageRoot = dirname($vendorDir);
-            	while(!file_exists($thisPackageRoot.'/composer.json')){
-            		$thisPackageRoot_ = dirname($thisPackageRoot);
-            		if($thisPackageRoot == $thisPackageRoot_){
-            			throw new \Exception("No configuration found for the package $package");
-            		}
-            		$thisPackageRoot = $thisPackageRoot_;
-            	}
-            	$composerJson = json_decode(file_get_contents($thisPackageRoot.'/composer.json'),true);
-            	if($composerJson["name"] == $package){
-            		$packageConfigFile = $thisPackageRoot.'/config.json';
-            	}
-            	if(!file_exists($packageConfigFile)){
-            		throw new \Exception("No configuration found for the package $package");
-            	}
-            }
+        	$packageConfigFile = self::getConfigFile($package);
 
             $settings = json_decode(file_get_contents($packageConfigFile),true);
             
@@ -78,6 +55,33 @@ class Settings{
 
         return $settings;
 
+    }
+    
+    public static function getConfigFile($package){
+    	$vendorDir = self::getVendorDir();
+    	
+    	$packageConfigFile = $vendorDir.'/'.$package.'/config.json';
+    	if(!file_exists($packageConfigFile)){
+    		// if no config.json in vendor directory ,
+    		// try to find the current package's config.json
+    		$thisPackageRoot = dirname($vendorDir);
+    		while(!file_exists($thisPackageRoot.'/composer.json')){
+    			$thisPackageRoot_ = dirname($thisPackageRoot);
+    			if($thisPackageRoot == $thisPackageRoot_){
+    				throw new \Exception("No configuration found for the package $package");
+    			}
+    			$thisPackageRoot = $thisPackageRoot_;
+    		}
+    		$composerJson = json_decode(file_get_contents($thisPackageRoot.'/composer.json'),true);
+    		if($composerJson["name"] == $package){
+    			$packageConfigFile = $thisPackageRoot.'/config.json';
+    		}
+    		
+    		if(!file_exists($packageConfigFile)){
+    			throw new \Exception("No configuration found for the package $package");
+    		}
+    	}
+    	return $packageConfigFile;
     }
     
 }

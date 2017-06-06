@@ -8,7 +8,6 @@
 namespace PhpPlatform\Tests\Config;
 
 use PhpPlatform\Config\Settings;
-use Composer\Autoload\ClassLoader;
 use PhpPlatform\Config\SettingsCache;
 
 class TestSettings extends \PHPUnit_Framework_TestCase{
